@@ -1,0 +1,69 @@
+# Diet
+public class Ingredient{
+
+	private String name;
+	private String unit;
+	private double protein;
+	private double fat;
+	private double carbohydrates;
+
+	public Ingredient(String name, String unit, double protein, double fat, double carbohydrates){
+		this.name = name;
+		this.unit = unit;
+		this.protein = protein;
+		this.fat = fat;
+		this.carbohydrates= carbohydrates;
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public String getUnit(){
+		return unit;
+	}
+
+	public double getProtein(){
+		return protein;
+	}
+
+	public double getFat(){
+		return fat;
+	}
+
+	public double getCarbohydrates(){
+		return carbohydrates;
+	}
+
+	public double computeProtein(double protein){
+		double resultProtein = 0.0;
+		resultProtein = 100 * protein;
+		return resultProtein;
+	}
+
+	public double computeFat(double fat){
+		double resultFat = 0.0;
+		resultFat = 100 * fat;
+		return resultFat;
+	}
+
+	public double computeCarbohydrates(double carbohydrates){
+		double resultCarbs = 0.0;
+		resultCarbs = 100 * carbohydrates;
+		return resultCarbs;
+	}
+
+	public double computeCalories(){
+		double result = 0.0;
+		result = 4 * 100 * protein + 9 * 100 * fat + 4 * 100 * carbohydrates;
+		return result;
+	}
+
+	public String toString(){
+		return name;
+	}
+
+	public void nutritionalValues(int quantity){
+		System.out.println(quantity + " " + unit + " of " + name + " contain " + computeProtein(protein) + " " + unit + " of protein, " + computeFat(fat) + " " + unit + " of fat, and " + computeCarbohydrates(carbohydrates) + " " + unit + " of carbohydrates, for a total of " + computeCalories() + "calories.");
+	}
+}
