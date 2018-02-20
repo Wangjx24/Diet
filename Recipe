@@ -1,0 +1,64 @@
+# Diet
+public class recipe{
+	
+	private String name;
+	private int number;
+	private Ingredient[] ingredients;
+	private double[] ingredQuantity;
+
+	public recipe(String name){
+		this.name = name;
+		int number;
+		Ingredient[] ingredients = new Ingredient[100];
+		double[] ingredQuantity = new double[100];
+		IngredientDatabase db = new IngredientDatabase();
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	public void addIngredient(String added, double quantity){
+		ingredients[number] = db.findIngredient(added);
+		ingredQuantity[number] = quantity;
+		number ++;
+	}
+
+	public double computeProtein(){
+		double resultP = 0;
+		for (int i = 0; i < 100; i++){
+			resultP += ingredients[i].getProtein() * ingredQuantity[i] * 100;
+		}
+		return resultP;
+	}
+
+	public double computeFat(){
+		double resultF = 0;
+		for (int i = 0; i < 100; i++){
+			resultF += ingredients[i].getFat() * ingredQuantity[i] * 100;
+		}
+		return resultF;
+	}
+
+	public double computeCarbohydrates(){
+		double resultC = 0;
+		for (int i = 0; i < 100; i++){
+			resultC += ingredients[i].getCarbohydrates() * ingredQuantity[i] * 100;
+		}
+		return resultC;
+	}
+
+	public String toString(){
+		return "recipe of " + getName() + ": ";
+		for (int i = 0; i < 100; i++){
+			return ingredQuantity[i] + " " + ingredients[i].getUnit() + " of " +  ingredients[i];
+		}
+	}
+
+	public String nutritionalValues(){
+		return "Nutritional Values of " + getName();
+		return "Total protein: " + computeProtein();
+		return "Total fat: " + computeFat();
+		return "Total carbohydrates: " + computeCarbohydrates();
+	}
+}
