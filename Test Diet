@@ -1,0 +1,212 @@
+# Diet
+public class TestDiet{
+
+	public static void main(String[] args) {
+		IngredientDatabase db = new IngredientDatabase();
+    	recipe cake = new recipe("chocolate cake");
+    	cake.addIngredient(db.findIngredient("egg"), 4);
+    	cake.addIngredient(db.findIngredient("sugar"), 100);
+    	cake.addIngredient(db.findIngredient("butter"), 100);
+    	cake.addIngredient(db.findIngredient("flour"), 200);
+    	cake.addIngredient(db.findIngredient("milk"), 50);
+    	cake.addIngredient(db.findIngredient("cocoa"), 75);
+		System.out.println(cake);
+    	System.out.println();
+    	System.out.println(cake.nutritionalValues());
+	}
+
+}
+
+class Ingredient{
+
+    private String name;
+    private String unit;
+    private double protein;
+    private double fat;
+    private double carbohydrates;
+
+    public Ingredient(String name, String unit, double protein, double fat, double carbohydrates){
+        this.name = name;
+        this.unit = unit;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrates= carbohydrates;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getUnit(){
+        return unit;
+    }
+
+    public double getProtein(){
+        return protein;
+    }
+
+    public double getFat(){
+        return fat;
+    }
+
+    public double getCarbohydrates(){
+        return carbohydrates;
+    }
+
+    public double computeProtein(double protein){
+        double resultProtein = 0.0;
+        resultProtein = 100 * protein;
+        return resultProtein;
+    }
+
+    public double computeFat(double fat){
+        double resultFat = 0.0;
+        resultFat = 100 * fat;
+        return resultFat;
+    }
+
+    public double computeCarbohydrates(double carbohydrates){
+        double resultCarbs = 0.0;
+        resultCarbs = 100 * carbohydrates;
+        return resultCarbs;
+    }
+
+    public double computeCalories(){
+        double result = 0.0;
+        result = 4 * 100 * getProtein() + 9 * 100 * getFat() + 4 * 100 * getCarbohydrates();
+        return result;
+    }
+
+    public String toString(){
+        return name;
+    }
+
+    public void nutritionalValues(int quantity){
+        System.out.println(quantity + " " + unit + " of " + name + " contain " + computeProtein(protein) + " " + unit + " of protein, " + computeFat(fat) + " " + unit + " of fat, and " + computeCarbohydrates(carbohydrates) + " " + unit + " of carbohydrates, for a total of " + computeCalories() + "calories.");
+    }
+}
+
+class IngredientDatabase {
+
+  private Ingredient[] ingredients; // array of Ingredient serves as the database for ingredients
+  private int numIngredients; // number of ingrediens in the database/array
+
+  // add information of each ingreidient into the ingredient database
+  public IngredientDatabase() {
+    ingredients = new Ingredient[100];
+    ingredients[0] = new Ingredient("flour", "g", 0.11, 0.012, 0.75);
+    ingredients[1] = new Ingredient("milk", "ml", 0.033, 0.038, 0.047);
+    ingredients[2] = new Ingredient("oil", "g", 0, 1, 0);
+    ingredients[3] = new Ingredient("egg", "unit", 6.15, 5.45, 0);
+    ingredients[4] = new Ingredient("sugar", "g", 0, 0, 1);
+    ingredients[5] = new Ingredient("butter", "g", 0.005, 0.82, 0);
+    ingredients[6] = new Ingredient("cocoa", "g", 0.19, 0.22, 0.12);
+    ingredients[7] = new Ingredient("asparagus", "g", 0.0007, 0, 0.03);
+    ingredients[8] = new Ingredient("avocado", "unit", 6.8, 34, 3.4);
+    ingredients[9] = new Ingredient("cabbage", "g", 0.03, 0, 0.03);
+    ingredients[10] = new Ingredient("celery", "g", 0.01, 0, 0.013);
+    ingredients[11] = new Ingredient("cheese", "g", 0.26, 0.34, 0);
+    ingredients[12] = new Ingredient("chicken", "g", 0.22, 0.075, 0);
+    ingredients[13] = new Ingredient("cod", "unit", 18, 9, 7.2);
+    ingredients[14] = new Ingredient("ham", "g", 0.18, 0.05, 0);
+    ingredients[15] = new Ingredient("honey", "g", 0, 0, 0.76);
+    ingredients[16] = new Ingredient("mushrooms", "g", 0.02, 0.006, 0.25);
+    ingredients[17] = new Ingredient("rice", "g", 0.065, 0.001, 0.87);
+    numIngredients = 18;
+  }
+
+  // search the name of the ingredient in the database and return the unit/protein/fat/carbohydrates information of the ingredient
+  public Ingredient findIngredient(String name){
+    for (int i = 0; i < numIngredients; i++){
+      if (ingredients[i].getName().equals(name)){
+        return ingredients[i];
+      }
+    }
+    return null; // if the iingredient can't be found in the database, then return null
+  }
+
+}
+
+class recipe{
+    
+    private String name; // name of the recipe
+    private int number; // the number of the ingredients in the recipe
+    private Ingredient[] ingredients; // the array represent the object of the ingredients
+    private double[] ingredQuantity; // the array represent the quantity of the ingredients
+
+    // initialize constructor recipe
+    public recipe(String name){
+        this.name = name;
+        number = 0;
+        ingredients = new Ingredient[100];
+        ingredQuantity = new double[100];
+        //IngredientDatabase db = new IngredientDatabase();
+    }
+
+    // return the name of the recipe
+    public String getName(){
+        return name;
+    }
+
+    // add a certain amount of ingredient to the recipe
+    public void addIngredient(Ingredient added, double quantity){
+        ingredients[number] = added;
+        ingredQuantity[number] = quantity;
+        this.number ++;
+    }
+
+    // compute the amount of protein in all the ingredients for the recipe
+    public double computeProtein(){
+        double resultP = 0;
+        for (int i = 0; i < number; i++){
+            resultP += ingredients[i].getProtein() * ingredQuantity[i];
+        }
+        return resultP;
+    }
+
+    // compute the amount of fat in all the ingredients for the recipe
+    public double computeFat(){
+        double resultF = 0;
+        for (int i = 0; i < number; i++){
+            resultF += ingredients[i].getFat() * ingredQuantity[i];
+        }
+        return resultF;
+    }
+
+    // compute the amount of carbohydrates in all the ingredients for the recipe
+    public double computeCarbohydrates(){
+        double resultC = 0;
+        for (int i = 0; i < number; i++){
+            resultC += ingredients[i].getCarbohydrates() * ingredQuantity[i];
+        }
+        return resultC;
+    }
+
+    public double computeTotalCalories(){
+        double resultCal = 0;
+        for (int i = 0; i < number; i++){
+            resultCal += 4 * 100 * ingredients[i].getProtein() + 9 * 100 * ingredients[i].getFat() + 4 * 100 * ingredients[i].getCarbohydrates();
+        }
+        return resultCal;
+    }
+
+    public String toString(){
+        String result = " ";
+        result += "recipe of " + getName() + ": ";
+        for (int i = 0; i < this.number - 1; i++){
+            result += ingredQuantity[i] + " " + ingredients[i].getUnit() + " of " +  ingredients[i] + ", ";
+        }
+        result += "and " + ingredQuantity[this.number - 1] + " " + ingredients[this.number - 1].getUnit() + " of " +  ingredients[this.number - 1];
+        return result;
+    }
+
+    public String nutritionalValues(){
+        String result = " ";
+        result += "Nutritional Values of " + getName() + "%n";
+        result += "Total protein: " + computeProtein();
+        result += "Total fat: " + computeFat();
+        result += "Total carbohydrates: " + computeCarbohydrates();
+        result += "Total calories: " + computeTotalCalories();
+        return result;
+    }
+}
